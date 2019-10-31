@@ -134,7 +134,7 @@ def write_file(file):
             except: 
                 print(profession)
 
-        document.save(r'C:\Users\x270\Desktop\test' + '\\'+ province_name + '分公司2020-2019年网络发展滚动规划初审意见.docx')
+        document.save(r'C:\Users\x270\Desktop\test' + '\\'+ province_name + '分公司2020-2022年网络发展滚动规划初审意见.docx')
 
 def main():
     global professions
@@ -154,11 +154,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-        
 
 
 
