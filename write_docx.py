@@ -20,9 +20,12 @@ def write_file(file):
 
     for province_name in province_names:
         document = Document()
-        document.styles['Normal'].font.name = u'宋体'
-        document.styles['Normal'].font.size = Pt(13)
-        document.styles['Normal']._element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体')        
+        document.styles['Normal'].font.name = u'仿宋'
+        document.styles['Normal'].font.size = Pt(16)
+        document.styles['Normal']._element.rPr.rFonts.set(qn('w:eastAsia'), u'仿宋')
+        line_spacing = 32 #行间距
+        space_after =  0 #段后间距
+
         
         #标题行
         p = document.add_paragraph('')
@@ -45,7 +48,9 @@ def write_file(file):
         
         
         p = document.add_paragraph('')
-        p = document.add_paragraph('  2019年10月28日-10月30日集团公司网络发展部组织集团规划项目组对你省公司2020-2022年网络发展滚动规划总体思路进行了集中评审，形成审查意见如下。')
+        p = document.add_paragraph('    2019年10月28日-10月30日集团公司网络发展部组织集团规划项目组对你省公司2020-2022年网络发展滚动规划总体思路进行了集中评审，形成审查意见如下。')
+        p.paragraph_format.line_spacing = Pt(line_spacing)
+        p.paragraph_format.space_after = Pt(space_after)
         p = document.add_paragraph('')
 
 
@@ -53,17 +58,23 @@ def write_file(file):
         run = document.add_heading('',level=1).add_run('一 总体要求')
         run.font.name=u'黑体'
         run._element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体') 
-        run.font.size = Pt(17)
+        run.font.size = Pt(16)
         run.font.color.rgb = RGBColor(0x1a,0x1a,0x1a)
         run.bold = True 
 
 
         p = document.add_paragraph('')
-        p = document.add_paragraph('（一）细化梳理网络现状，充分利旧现网资源，提质增效。')
-        p = document.add_paragraph('（二）规划方案原则上必须有国家要求（当地政府要求）、集团战略、市场需求或技术发展趋势等作为规划输入。')
-        p = document.add_paragraph('（三）为保证2020年的5G建设投资，除5G以外的各专业投资预计将大幅压缩，')
+        p = document.add_paragraph('    （一）细化梳理网络现状，充分利旧现网资源，提质增效。')
+        p.paragraph_format.line_spacing = Pt(line_spacing)
+        p.paragraph_format.space_after = Pt(space_after)
+        p = document.add_paragraph('    （二）规划方案原则上必须有国家要求（当地政府要求）、集团战略、市场需求或技术发展趋势等作为规划输入。')
+        p.paragraph_format.line_spacing = Pt(line_spacing)
+        p.paragraph_format.space_after = Pt(space_after)
+        p = document.add_paragraph('    （三）为保证2020年的5G建设投资，除5G以外的各专业投资预计将大幅压缩，')
+        p.paragraph_format.line_spacing = Pt(line_spacing)
+        p.paragraph_format.space_after = Pt(space_after)
         run = p.add_run('具体见各专业压缩比例。')
-        run.font.color.rgb = RGBColor(0xff,0x00,0x00) #想要个别更改属性，就需要用.add_run方法
+        #run.font.color.rgb = RGBColor(0xff,0x00,0x00) #想要个别更改属性，就需要用.add_run方法
         run1 = p.add_run('可建可不建的项目原则上不予建设。')
         p = document.add_paragraph('')
 
@@ -73,7 +84,7 @@ def write_file(file):
         run = document.add_heading('',level=1).add_run('二 各专业具体要求')
         run.font.name=u'黑体'
         run._element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体') 
-        run.font.size = Pt(17)
+        run.font.size = Pt(16)
         run.font.color.rgb = RGBColor(0x1a,0x1a,0x1a)
         run.bold = True
         p = document.add_paragraph('')     
@@ -88,18 +99,24 @@ def write_file(file):
 
                     #添加大专业标题
                     run = document.add_heading('',level=2).add_run('2.' + str(index_1+1) + ' ' + profession)
-                    run.font.name=u'黑体'
-                    run._element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体') 
+                    run.font.name=u'宋体'
+                    run._element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体') 
                     run.font.size = Pt(16)
+                    run.bold = True
                     run.font.color.rgb = RGBColor(0x1a,0x1a,0x1a)
                     p = document.add_paragraph('')  
-                    p = document.add_paragraph('')  
+                    p = document.add_paragraph('')
+                    p.paragraph_format.line_spacing = Pt(line_spacing)  
+                    p.paragraph_format.space_after = Pt(space_after)
 
 
                     for content_name in content_names: #共性问题，个性问题
                         p.add_run(content_name).bold = True
                         for content in file[profession][province_name][content_name]:
                             p = document.add_paragraph(content)
+                            p.paragraph_format.line_spacing = Pt(line_spacing) #行间距
+                            p.paragraph_format.space_after = Pt(space_after)
+                            p.paragraph_format.first_line_indent = Pt(32) #首行缩进
 
                 else:
 
@@ -108,29 +125,41 @@ def write_file(file):
                         if index_2 == 0:
                             #添加大专业标题
                             run = document.add_heading('',level=2).add_run('2.' + str(index_1+1) + ' ' + sub_profession)
-                            run.font.name=u'黑体'
-                            run._element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体') 
+                            run.font.name=u'宋体'
+                            run._element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体')
+                            run.bold = True 
                             run.font.size = Pt(16)
                             run.font.color.rgb = RGBColor(0x1a,0x1a,0x1a)
-                            p = document.add_paragraph('') 
+                            p = document.add_paragraph('')
+                            p.paragraph_format.line_spacing = Pt(line_spacing) #行间距
+                            p.paragraph_format.space_after = Pt(space_after)
 
                         else:
 
                             #添加小专业标题
                             run = document.add_heading('',level=3).add_run('2.' + str(index_1+1) + '.' + str(index_2) + ' ' + sub_profession)
-                            run.font.name=u'黑体'
-                            run._element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体') 
-                            run.font.size = Pt(15)
+                            run.font.name=u'宋体 (中文标题)'
+                            run._element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体 (中文标题)') 
+                            run.font.size = Pt(16)
                             run.font.color.rgb = RGBColor(0x1a,0x1a,0x1a)
                             run.bold = True 
                             p = document.add_paragraph('')
                             p = document.add_paragraph('')
+                            p.paragraph_format.line_spacing = Pt(line_spacing) #行间距
+                            p.paragraph_format.space_after = Pt(space_after)
 
-                            for content_name in content_names: #共性问题，个性问题
-                                p.add_run(content_name).bold = True
+                            for content_name in content_names: #共性意见，你省审查意见
+                                if content_name == '（一）共性意见':
+                                    p.add_run('（一）你省共性要求').bold = True
+                                else:
+                                    p.add_run('（二）你省其他审查意见').bold = True
                                 for content in file[sub_profession][province_name][content_name]:
                                     p = document.add_paragraph(content)
+                                    p.paragraph_format.line_spacing = Pt(line_spacing) #行间距
+                                    p.paragraph_format.space_after = Pt(space_after)
+                                    p.paragraph_format.first_line_indent = Pt(32) #首行缩进
                                 p = document.add_paragraph('')
+                                p.paragraph_format.line_spacing = Pt(line_spacing)
             except: 
                 print(profession)
 
